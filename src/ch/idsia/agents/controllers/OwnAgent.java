@@ -52,10 +52,15 @@ public OwnAgent()
 public void reset()
 {
     action = new boolean[Environment.numberOfKeys];
+    // 右ダッシュ固定
+    action[Mario.KEY_RIGHT] = true;
+    action[Mario.KEY_SPEED] = true;
 }
 
 public boolean[] getAction()
 {
+	// ジャンプ可能または空中にいるならジャンプボタンを押しつづける
+    action[Mario.KEY_JUMP] = isMarioAbleToJump || (!isMarioOnGround && action[Mario.KEY_JUMP]);
     return action;
 }
 }

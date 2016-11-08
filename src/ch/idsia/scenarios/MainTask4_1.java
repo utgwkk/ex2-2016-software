@@ -38,35 +38,34 @@ import ch.idsia.agents.controllers.GreatestAgent;
  */
 public final class MainTask4_1
 {
-public static void main(String[] args)
-{
-    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+	public static void main(String[] args)
+	{
+	    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
 
-    final Agent agent = new GreatestAgent();
-    marioAIOptions.setAgent(agent);
+	    final Agent agent = new GreatestAgent();
+	    marioAIOptions.setAgent(agent);
 
-    int seed = 0;
-    marioAIOptions.setLevelRandSeed(seed);
-    
-    int d = 2;
-    marioAIOptions.setLevelDifficulty(d);
-    
-    marioAIOptions.setEnemies("g");
-    
-    marioAIOptions.setDeadEndsCount(true);
-    marioAIOptions.setCannonsCount(true);
-    marioAIOptions.setHillStraightCount(true);
-    marioAIOptions.setTubesCount(false);
-    marioAIOptions.setGapsCount(true);
-    marioAIOptions.setHiddenBlocksCount(false);
-    marioAIOptions.setBlocksCount(true);
-    marioAIOptions.setCoinsCount(true);
-    marioAIOptions.setFlatLevel(false);
-    
-    final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.setOptionsAndReset(marioAIOptions);
-    basicTask.doEpisodes(1,true,1);
-    System.exit(0);
-}
+	    int seed = 0;
+	    marioAIOptions.setLevelRandSeed(seed);
 
+	    int d = 2;
+	    marioAIOptions.setLevelDifficulty(d);
+
+	    marioAIOptions.setEnemies("g");
+
+	    marioAIOptions.setDeadEndsCount(true);
+	    marioAIOptions.setCannonsCount(true);
+	    marioAIOptions.setHillStraightCount(true);
+	    marioAIOptions.setTubesCount(false);
+	    marioAIOptions.setGapsCount(true);
+	    marioAIOptions.setHiddenBlocksCount(false);
+	    marioAIOptions.setBlocksCount(true);
+	    marioAIOptions.setCoinsCount(true);
+	    marioAIOptions.setFlatLevel(false);
+
+	    final BasicTask basicTask = new BasicTask(marioAIOptions);
+	    basicTask.setOptionsAndReset(marioAIOptions);
+	    basicTask.doEpisodes(1,true,1);
+	    System.exit(0);
+	}
 }

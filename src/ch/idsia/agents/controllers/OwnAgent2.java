@@ -30,6 +30,8 @@ package ch.idsia.agents.controllers;
 import ch.idsia.agents.Agent;
 import ch.idsia.benchmark.mario.engine.sprites.Mario;
 import ch.idsia.benchmark.mario.environments.Environment;
+import ch.idsia.benchmark.mario.engine.GeneralizerLevelScene;
+import ch.idsia.benchmark.mario.engine.sprites.Sprite;
 import java.util.Random;
 
 /**
@@ -39,28 +41,50 @@ import java.util.Random;
  * Time: 4:03:46 AM
  */
 
-public class OwnAgent2 extends BasicMarioAIAgent implements Agent
-{
-int trueJumpCounter = 0;
-int trueSpeedCounter = 0;
-
-public OwnAgent2()
-{
-    super("OwnAgent");
-    reset();
-}
-
-public void reset()
-{
-    action = new boolean[Environment.numberOfKeys];
-    action[Mario.KEY_RIGHT] = true;
-}
-
-public boolean[] getAction()
-{
-    Random R = new Random();
-    action[Mario.KEY_DOWN] = R.nextBoolean();
+public class OwnAgent2 extends BasicMarioAIAgent implements Agent {
+	public OwnAgent2() {
+	    super("OwnAgent2");
+	    reset();
+	}
 	
-    return action;
-}
+	public boolean isObstacle (int r, int c) {
+		int val = getReceptiveFieldCellValue(r, c);
+		return val == GeneralizerLevelScene.BRICK ||
+				val == GeneralizerLevelScene.BORDER_CANNOT_PASS_THROUGH ||
+				val == GeneralizerLevelScene.FLOWER_POT_OR_CANNON ||
+				val == GeneralizerLevelScene.LADDER;
+	}
+
+	public boolean isEnemy (int r, int c) {
+		return getEnemiesCellValue(r, c) != Sprite.KIND_NONE;
+	}
+	
+	public boolean isObstacleInFrontOfMario () {
+		for (int i = -2; i <= 0; i++) {
+			for (int j = 0; j <= 2; j++) {
+				if (isObstacle (marioEgoRow + i, marioEgoCol + j) || isEnemy(marioEgoRow + i, marioEgoCol + j))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isCliffInFrontOfMario () {
+		for (int j = 1; j <= 4; ++j) {
+			if (getReceptiveFieldCellValue(marioEgoRow + 1, marioEgoCol + j) != 0)
+				return true;
+		}
+		return false;
+	}
+	
+	public void reset() {
+	    action = new boolean[Environment.numberOfKeys];
+	    action[Mario.KEY_RIGHT] = true;
+	    action[Mario.KEY_SPEED] = true; 
+	}
+
+	public boolean[] getAction() {
+		action[Mario.KEY_JUMP] = !isMarioOnGround || isMarioAbleToJump && (isObstacleInFrontOfMario() || isCliffInFrontOfMario());
+	    return action;
+	}
 }

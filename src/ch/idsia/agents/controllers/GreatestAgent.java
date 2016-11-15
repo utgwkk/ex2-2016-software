@@ -7,12 +7,11 @@ import ch.idsia.benchmark.mario.environments.Environment;
 public class GreatestAgent extends BasicMarioAIAgent implements Agent {
 	boolean isKimeuchi = false;
 	final int[] kimeuchi = {
-		0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1 | 16, 
-		8 | 1, 8 | 1, 8 | 2 | 16, 8 | 2 | 16, 8 | 2 | 16, 8 | 2 | 16, 8 | 2 | 16, 8 | 2 | 16, 2, 2
+		0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 17, 9, 9, 26, 26, 26, 26, 26, 26, 2, 2
 	};
 	final int[] kimeuchi2 = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-		16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0,
+		16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 16, 0,
 	};
 	/*
 	 * 000001 left

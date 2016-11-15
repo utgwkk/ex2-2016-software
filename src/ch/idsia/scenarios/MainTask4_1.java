@@ -30,7 +30,7 @@ package ch.idsia.scenarios;
 import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.agents.Agent;
-import ch.idsia.agents.controllers.IgnoreObstacleAgent;
+import ch.idsia.agents.controllers.GreatestAgent;
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 17, 2010 Time: 8:28:00 AM
@@ -38,35 +38,34 @@ import ch.idsia.agents.controllers.IgnoreObstacleAgent;
  */
 public final class MainTask4_1
 {
-public static void main(String[] args)
-{
-    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
+	public static void main(String[] args)
+	{
+	    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
 
-    final Agent agent = new IgnoreObstacleAgent();
-    marioAIOptions.setAgent(agent);
+	    final Agent agent = new GreatestAgent();
+	    marioAIOptions.setAgent(agent);
 
-    int seed = 0;
-    marioAIOptions.setLevelRandSeed(seed);
-    
-    int d = 2;
-    marioAIOptions.setLevelDifficulty(d);
-    
-    marioAIOptions.setEnemies("g");
-    
-    marioAIOptions.setDeadEndsCount(true);
-    marioAIOptions.setCannonsCount(true);
-    marioAIOptions.setHillStraightCount(true);
-    marioAIOptions.setTubesCount(false);
-    marioAIOptions.setGapsCount(true);
-    marioAIOptions.setHiddenBlocksCount(false);
-    marioAIOptions.setBlocksCount(true);
-    marioAIOptions.setCoinsCount(true);
-    marioAIOptions.setFlatLevel(false);
-    
-    final BasicTask basicTask = new BasicTask(marioAIOptions);
-    basicTask.setOptionsAndReset(marioAIOptions);
-    basicTask.doEpisodes(1,true,1);
-    System.exit(0);
-}
+	    int seed = 0;
+	    marioAIOptions.setLevelRandSeed(seed);
 
+	    int d = 2;
+	    marioAIOptions.setLevelDifficulty(d);
+
+	    marioAIOptions.setEnemies("g");
+
+	    marioAIOptions.setDeadEndsCount(true);
+	    marioAIOptions.setCannonsCount(true);
+	    marioAIOptions.setHillStraightCount(true);
+	    marioAIOptions.setTubesCount(false);
+	    marioAIOptions.setGapsCount(true);
+	    marioAIOptions.setHiddenBlocksCount(false);
+	    marioAIOptions.setBlocksCount(true);
+	    marioAIOptions.setCoinsCount(true);
+	    marioAIOptions.setFlatLevel(false);
+
+	    final BasicTask basicTask = new BasicTask(marioAIOptions);
+	    basicTask.setOptionsAndReset(marioAIOptions);
+	    basicTask.doEpisodes(1,true,1);
+	    System.exit(0);
+	}
 }

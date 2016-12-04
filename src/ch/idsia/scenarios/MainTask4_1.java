@@ -32,7 +32,6 @@ import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.GreatestAgent;
 import ch.idsia.agents.controllers.SugoiAgent;
->>>>>>> kadai4
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 17, 2010 Time: 8:28:00 AM

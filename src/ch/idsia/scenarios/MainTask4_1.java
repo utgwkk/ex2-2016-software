@@ -31,6 +31,8 @@ import ch.idsia.benchmark.tasks.BasicTask;
 import ch.idsia.tools.MarioAIOptions;
 import ch.idsia.agents.Agent;
 import ch.idsia.agents.controllers.GreatestAgent;
+import ch.idsia.agents.controllers.SugoiAgent;
+>>>>>>> kadai4
 
 /**
  * Created by IntelliJ IDEA. User: Sergey Karakovskiy, sergey at idsia dot ch Date: Mar 17, 2010 Time: 8:28:00 AM
@@ -42,7 +44,7 @@ public final class MainTask4_1
 	{
 	    final MarioAIOptions marioAIOptions = new MarioAIOptions(args);
 
-	    final Agent agent = new GreatestAgent();
+	    final Agent agent = new SugoiAgent();
 	    marioAIOptions.setAgent(agent);
 
 	    int seed = 0;

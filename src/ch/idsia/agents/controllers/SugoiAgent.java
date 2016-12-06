@@ -20,14 +20,6 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 	    action = new boolean[Environment.numberOfKeys];
 	    action[Mario.KEY_RIGHT] = true;
 	}
-
-	public boolean[] bitToAction (int bit) {
-		boolean[] act = new boolean[Environment.numberOfKeys];
-		for (int i = 0; i < Environment.numberOfKeys; ++i) {
-			act[i] = (bit & (1 << i)) > 0;
-		}
-		return act;
-	}
 	
 	public boolean isObstacle(int r, int c){
 		return getReceptiveFieldCellValue(r, c)==GeneralizerLevelScene.BRICK
@@ -44,16 +36,8 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 		getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != Sprite.KIND_NONE;
 	}
 	
-	public boolean isEnemyInFrontOfMario() {
-		return getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != Sprite.KIND_FIREBALL &&
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != Sprite.KIND_NONE ||
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != Sprite.KIND_FIREBALL &&
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != Sprite.KIND_NONE;
-	}
-	
 	public boolean isNothing(int r, int c) {
-		return getReceptiveFieldCellValue(r, c) == 0 ||
-			   !isObstacle(r, c);
+		return getReceptiveFieldCellValue(r, c) == 0 || !isObstacle(r, c);
 	}
 	
 	public boolean isHillInFrontOfMario() {
@@ -64,7 +48,7 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 	}
 
 	public boolean isLargeGap() {
-		if (action[Mario.KEY_SPEED]&& !isMarioOnGround)
+		if (action[Mario.KEY_SPEED] && !isMarioOnGround)
 			return true;
 		boolean retval = true;
 		for (int cs = 2; cs <= 5; ++cs)
@@ -77,7 +61,7 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 		if (distancePassedCells > 128)
 			return distancePassedCells / 5 + 10;
 		else
-			return 1;
+			return 0;
 	}
 
 	public boolean[] getAction () {
@@ -88,15 +72,16 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 		}
 		if(isHillInFrontOfMario()) {
 			System.out.println(String.format("detect gap in %d", distancePassedCells));
+			action[Mario.KEY_RIGHT] = true;
 			action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
 			action[Mario.KEY_SPEED] = isLargeGap() && distancePassedCells > 5;
 			if (action[Mario.KEY_SPEED])
 				System.out.println(String.format("large gap in %d", distancePassedCells));
 		}else if(isObstacleInFrontOfMario()){
 			System.out.println(String.format("detect obstacle in %d", distancePassedCells));
+			action[Mario.KEY_RIGHT] = true;
 			action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
 		}else{
-			action[Mario.KEY_LEFT] = false;
 			action[Mario.KEY_RIGHT] = true;
 			action[Mario.KEY_SPEED] = false;
 		}

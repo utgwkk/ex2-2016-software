@@ -29,11 +29,13 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 	}
 	
 	public boolean isObstacleInFrontOfMario() {
-		return isObstacle(marioEgoRow, marioEgoCol + 1) || isObstacle(marioEgoRow, marioEgoCol + 2) || 
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != Sprite.KIND_FIREBALL &&
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 2) != Sprite.KIND_NONE ||
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != Sprite.KIND_FIREBALL &&
-		getEnemiesCellValue(marioEgoRow, marioEgoCol + 1) != Sprite.KIND_NONE;
+		boolean retval = false;
+		for (int cs = 1; cs <= 2; ++cs) {
+			retval = retval || isObstacle(marioEgoRow, marioEgoCol + cs) || 
+					getEnemiesCellValue(marioEgoRow, marioEgoCol + cs) != Sprite.KIND_FIREBALL &&
+					getEnemiesCellValue(marioEgoRow, marioEgoCol + cs) != Sprite.KIND_NONE;
+		}
+		return retval;
 	}
 	
 	public boolean isNothing(int r, int c) {
@@ -57,19 +59,14 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 		return retval;
 	}
 	
-	public int neutralizer () {
-		if (distancePassedCells > 128)
-			return distancePassedCells / 5 + 10;
-		else
-			return 0;
+	public boolean isBlockAboveMario() {
+		boolean retval = false;
+		for (int rs = 2; rs <= 3; ++rs)
+			retval = retval || getReceptiveFieldCellValue(marioEgoRow - rs, marioEgoCol) == GeneralizerLevelScene.BRICK;
+		return retval;
 	}
 
 	public boolean[] getAction () {
-		if(isMarioOnGround && r.nextInt(1000) < neutralizer()){
-			System.out.println(String.format("neutral in %d", distancePassedCells));
-			action[Mario.KEY_RIGHT] = false;
-			return action;
-		}
 		if(isHillInFrontOfMario()) {
 			System.out.println(String.format("detect gap in %d", distancePassedCells));
 			action[Mario.KEY_RIGHT] = true;
@@ -81,9 +78,12 @@ public class SugoiAgent extends BasicMarioAIAgent implements Agent {
 			System.out.println(String.format("detect obstacle in %d", distancePassedCells));
 			action[Mario.KEY_RIGHT] = true;
 			action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
+		}else if(isBlockAboveMario()){
+			System.out.println(String.format("detect brick in %d", distancePassedCells));
+			action[Mario.KEY_JUMP] = isMarioAbleToJump || !isMarioOnGround;
 		}else{
 			action[Mario.KEY_RIGHT] = true;
-			action[Mario.KEY_SPEED] = false;
+			action[Mario.KEY_SPEED] = false; 
 		}
 	    return action;
 	}
